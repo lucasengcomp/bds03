@@ -29,7 +29,8 @@ public class EmployeeController {
 	
 	@GetMapping
 	public ResponseEntity<Page<EmployeeDTO>> findAll(Pageable pageable) {
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
+		PageRequest pageRequest = PageRequest
+				.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
 		Page<EmployeeDTO> list = service.findAll(pageRequest);		
 		return ResponseEntity.ok().body(list);
 	}
