@@ -23,8 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private JwtTokenStore tokenStore;
 
     private static final String[] PULIC = {"/oauth/token", "/h2-console/**"};
-    private static final String[] OPERATOR_OR_ADMIN = {"/products/**", "/categories/**"};
-    private static final String[] ADMIN = {"/users/**"};
+    private static final String[] OPERATOR_GET = {"/departments/**", "/employees/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -41,13 +40,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(PULIC)
                 .permitAll()
-                .antMatchers(HttpMethod.GET)
-                .permitAll()
-                .antMatchers(OPERATOR_OR_ADMIN)
+                .antMatchers(HttpMethod.GET, OPERATOR_GET)
                 .hasAnyRole("OPERATOR", "ADMIN")
-                .antMatchers(ADMIN)
-                .hasAnyRole("ADMIN")
                 .anyRequest()
-                .authenticated();
+                .hasAnyRole("ADMIN");
     }
 }
